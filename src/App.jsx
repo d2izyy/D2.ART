@@ -112,7 +112,7 @@ const BackgroundMatrix = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return; // Safety check for White Screen prevention
+    if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     let animationFrameId;
@@ -302,7 +302,8 @@ export default function App() {
           <div className="animate-pulse">
             <p className="tracking-widest">ESTABLISHING UPLINK...</p>
             <p className="mt-2 text-xs opacity-50">BYPASSING SECURITY PROTOCOLS [FAILED]</p>
-            <p className="mt-2 text-xs opacity-50">REROUTING VIA TAU CETI IV [OK]</p>
+            {/* Updated loading text as requested */}
+            <p className="mt-2 text-xs opacity-50">REROUTING VIA INTERNAL LINK [OK]</p>
             <p className="mt-4 border border-[#CCFF00] p-2 inline-block">AWAITING RUNNER ID</p>
           </div>
         </div>
@@ -372,7 +373,7 @@ export default function App() {
           <div key={renderKey} className="p-6 md:p-12 min-h-[500px]">
             {activeTab === 'MANIFEST' && (
               <div className="max-w-4xl space-y-8">
-                {/* Top boxes preserved with updated text */}
+                {/* Header Boxes exactly as original boxes */}
                 <div className="border-l-[6px] border-[#CCFF00] pl-6 py-1 space-y-3">
                   <div>
                     <span className="bg-[#CCFF00] text-[#030308] text-xl md:text-3xl font-bold tracking-widest px-2 py-1 inline-block">
@@ -387,7 +388,6 @@ export default function App() {
                 </div>
                 
                 <div className="space-y-6 text-sm md:text-base tracking-widest font-bold pt-4">
-                  {/* Content paragraph boxes preserved with updated text */}
                   <p className="leading-[2.5]">
                     <span className="bg-[#CCFF00] text-[#030308] px-2 py-1" style={{ WebkitBoxDecorationBreak: 'clone', boxDecorationBreak: 'clone' }}>
                       <Typewriter text="Signal Noisy //Execute Command: Visual Refinement." delay={400} />
@@ -407,7 +407,7 @@ export default function App() {
                       </span>
                     </p>
                     
-                    {/* Stepped down aligned right layers */}
+                    {/* Stepped Down Layers aligned right as requested */}
                     <div className="text-right space-y-4 pr-4 md:pr-12">
                       <p>
                         <span className="bg-[#CCFF00] text-[#030308] px-2 py-1">
@@ -422,7 +422,7 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Warning Box reset to Left */}
+                  {/* Warning Box reset to Left alignment */}
                   <div className="border border-[#CCFF00] border-dashed p-6 mt-8 inline-block max-w-2xl">
                     <div className="mb-4">
                       <span className="bg-[#8CA800] text-[#030308] text-xs px-2 py-1 tracking-widest inline-block font-bold">
