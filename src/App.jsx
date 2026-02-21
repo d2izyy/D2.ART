@@ -403,7 +403,7 @@ export default function App() {
                   <div className="space-y-4">
                     <p className="leading-[2.5]">
                       <span className="bg-[#CCFF00] text-[#030308] px-2 py-1" style={{ WebkitBoxDecorationBreak: 'clone', boxDecorationBreak: 'clone' }}>
-                        <Typewriter text="My visual world is shaped by the decaying use of physical media our decaying analog creations, left by brutalistic precision of orbital habitats. Perfection is t̶r̶u̶t̶h" delay={1200} />
+                        <Typewriter text="My visual world is shaped by the decaying use of physical media our decaying analog creations, left by brutalistic precision of orbital habitats. Perfection is 𝗍̶𝗋̶𝗎̶𝗍̶𝗁̶" delay={1200} />
                       </span>
                     </p>
                     
