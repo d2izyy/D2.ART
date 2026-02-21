@@ -336,6 +336,7 @@ export default function App() {
 
       <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
       <BackgroundMatrix />
+      
       <div className="scanlines" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 1 }} />
       {globalGlitch === 'scan' && <div className="heavy-scanlines-flash" />}
 
@@ -371,10 +372,11 @@ export default function App() {
           <div key={renderKey} className="p-6 md:p-12 min-h-[500px]">
             {activeTab === 'MANIFEST' && (
               <div className="max-w-4xl space-y-8">
+                {/* Top boxes preserved with updated text */}
                 <div className="border-l-[6px] border-[#CCFF00] pl-6 py-1 space-y-3">
                   <div>
                     <span className="bg-[#CCFF00] text-[#030308] text-xl md:text-3xl font-bold tracking-widest px-2 py-1 inline-block">
-                      <Typewriter text=">> USER DESIGNATION: ARTIST" delay={0} />
+                      <Typewriter text=">>Architect" delay={0} />
                     </span>
                   </div>
                   <div>
@@ -383,33 +385,61 @@ export default function App() {
                     </span>
                   </div>
                 </div>
+                
                 <div className="space-y-6 text-sm md:text-base tracking-widest font-bold pt-4">
+                  {/* Content paragraph boxes preserved with updated text */}
                   <p className="leading-[2.5]">
                     <span className="bg-[#CCFF00] text-[#030308] px-2 py-1" style={{ WebkitBoxDecorationBreak: 'clone', boxDecorationBreak: 'clone' }}>
-                      <Typewriter text="I construct visual data. Videography, spatial 3D rendering, and photon-capture. The signal is often noisy. I refine it." delay={400} />
+                      <Typewriter text="Signal Noisy //Execute Command: Visual Refinement." delay={400} />
                     </span>
                   </p>
+
                   <p className="leading-[2.5]">
                     <span className="bg-[#CCFF00] text-[#030308] px-2 py-1" style={{ WebkitBoxDecorationBreak: 'clone', boxDecorationBreak: 'clone' }}>
-                      <Typewriter text="My aesthetics are heavily influenced by the analog decay of physical media and the sterile, brutalist precision of orbital habitats. Perfection is a flaw. The glitch is the truth." delay={1000} />
+                      <Typewriter text="I give life through construction of visual data. Videography, spatial 3D rendering, and photon-capture." delay={800} />
                     </span>
                   </p>
+
+                  <div className="space-y-4">
+                    <p className="leading-[2.5]">
+                      <span className="bg-[#CCFF00] text-[#030308] px-2 py-1" style={{ WebkitBoxDecorationBreak: 'clone', boxDecorationBreak: 'clone' }}>
+                        <Typewriter text="My visual world is shaped by the decaying use of physical media our decaying analog creations, left by brutalistic precision of orbital habitats. Perfection is t̶r̶u̶t̶h" delay={1200} />
+                      </span>
+                    </p>
+                    
+                    {/* Stepped down aligned right layers */}
+                    <div className="text-right space-y-4 pr-4 md:pr-12">
+                      <p>
+                        <span className="bg-[#CCFF00] text-[#030308] px-2 py-1">
+                          <Typewriter text="a flaw." delay={2800} />
+                        </span>
+                      </p>
+                      <p>
+                        <span className="bg-[#CCFF00] text-[#030308] px-2 py-1">
+                          <Typewriter text="The glitch is the truth." delay={3200} />
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Warning Box reset to Left */}
                   <div className="border border-[#CCFF00] border-dashed p-6 mt-8 inline-block max-w-2xl">
                     <div className="mb-4">
                       <span className="bg-[#8CA800] text-[#030308] text-xs px-2 py-1 tracking-widest inline-block font-bold">
-                        <Typewriter text="SYSTEM WARNING:" delay={1800} />
+                        <Typewriter text="ERROR SYSTEM WARNING" delay={3600} />
                       </span>
                     </div>
                     <p className="leading-[2.5]">
                       <span className="bg-[#CCFF00] text-[#030308] px-2 py-1" style={{ WebkitBoxDecorationBreak: 'clone', boxDecorationBreak: 'clone' }}>
-                        <Typewriter text="All archives are subject to sudden corruption. Proceed with caution." delay={2000} />
+                        <Typewriter text="Proceed with caution. All archives are subject to sudden co̵r̷rup̵̤̈́t̶͔̆i̴̺͝o̵̝̅n̸̜͋.̴̮̽" delay={4000} />
                       </span>
                     </p>
                   </div>
                 </div>
+                
                 <div className="pt-12 flex items-center">
                   <span className="bg-[#8CA800] text-[#030308] text-xs px-2 py-1 tracking-widest font-bold inline-block">
-                    <Typewriter text="END TRANSMISSION" delay={2500} />
+                    <Typewriter text="END TRANSMISSION" delay={4500} />
                   </span>
                   <span className="cursor-blink ml-3"></span>
                 </div>
