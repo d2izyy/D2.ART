@@ -382,7 +382,7 @@ export default function App() {
                   </div>
                   <div>
                     <span className="bg-[#8CA800] text-[#030308] text-sm tracking-wider px-2 py-1 font-bold inline-block">
-                      <Typewriter text="CLASS: VIDEO EDITOR & 3D ARTIST // STATUS: ACTIVE" delay={200} />
+                      <Typewriter text="CLASS: VIDEO EDITOR & 3D ARTIST" delay={200} />
                     </span>
                   </div>
                 </div>
