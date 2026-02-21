@@ -10,7 +10,7 @@ const globalStyles = `
 
   :root {
     --term-green: #CCFF00;
-    --term-bg: #050515; /* Updated to match the dark navy from the blue matrix image */
+    --term-bg: #050515;
     --term-dim: #1a2b00;
   }
 
@@ -107,12 +107,13 @@ const globalStyles = `
 `;
 
 // --- CANVAS BACKGROUND COMPONENT ---
-// Updated to match blue matrix grid from image_9732c6.png
 const BackgroundMatrix = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return; // Safety check for White Screen prevention
+
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     
@@ -124,7 +125,6 @@ const BackgroundMatrix = () => {
     let columns = 0;
     let rows = 0;
 
-    // Symbol set from the provided blue matrix images
     const chars = '#=,./:;xX+*_';
 
     const resizeCanvas = () => {
@@ -153,11 +153,9 @@ const BackgroundMatrix = () => {
       if (elapsed > fpsInterval) {
         then = now - (elapsed % fpsInterval);
 
-        // Deep navy/black background
         ctx.fillStyle = 'rgba(5, 5, 21, 0.9)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Character color: Deep indigo blue
         ctx.fillStyle = 'rgba(40, 60, 180, 0.4)';
         ctx.font = `${fontSize}px 'Share Tech Mono', monospace`;
 
@@ -174,7 +172,6 @@ const BackgroundMatrix = () => {
           const x = (i % columns) * fontSize;
           const y = Math.floor(i / columns) * fontSize + fontSize;
           
-          // Electric Blue Highlight (Randomized pop)
           if (Math.random() > 0.98) {
              ctx.fillStyle = '#4D9FFF';
              ctx.fillText(cell.char, x, y);
@@ -217,17 +214,20 @@ const Typewriter = ({ text, delay = 0, speed = 15 }) => {
 
   useEffect(() => {
     let i = 0;
-    let timeout;
+    let timeoutInterval;
     const startTyping = () => {
       setHasStarted(true);
-      timeout = setInterval(() => {
+      timeoutInterval = setInterval(() => {
         setDisplayedText(text.slice(0, i + 1));
         i++;
-        if (i >= text.length) clearInterval(timeout);
+        if (i >= text.length) clearInterval(timeoutInterval);
       }, speed);
     };
     const initialDelay = setTimeout(startTyping, delay);
-    return () => { clearInterval(timeout); clearTimeout(initialDelay); };
+    return () => { 
+      clearInterval(timeoutInterval); 
+      clearTimeout(initialDelay); 
+    };
   }, [text, delay, speed]);
 
   return <>{hasStarted ? displayedText : '\u00A0'}</>;
@@ -285,8 +285,6 @@ export default function App() {
     { id: 'iqM3uvxmU9Y', title: 'CLIENT_WORK // VIDEO 0004' }
   ];
 
-  // Corrected Paths for Vite (Files in public/images are served from /images/)
-  // Corrected filenames and extensions based on image_96af7d.png
   const threeDProjects = [
     { id: '0001', title: 'NEVERSLEEP', src: '/images/5.jpg' },
     { id: '0002', title: 'BOOM', src: '/images/3.jpg' },
@@ -318,7 +316,6 @@ export default function App() {
       className={`${globalGlitch === 'transform' ? 'global-glitch-transform' : ''} ${globalGlitch === 'wave' ? 'global-glitch-wave' : ''} ${globalGlitch === 'block' ? 'global-glitch-block' : ''}`}
     >
       
-      {/* SVG Filters for After Effects style distortions */}
       <svg style={{ display: 'none' }}>
         <defs>
           <filter id="wave-warp">
@@ -338,30 +335,21 @@ export default function App() {
       </svg>
 
       <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
-      
       <BackgroundMatrix />
-      
       <div className="scanlines" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 1 }} />
-      
       {globalGlitch === 'scan' && <div className="heavy-scanlines-flash" />}
 
-      {/* Main UI Container - Horizontally/Vertically Centered */}
       <div style={{ position: 'relative', zIndex: 10, minHeight: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-        
         <div className="w-full max-w-5xl bg-[#030308]/95 backdrop-blur-sm border border-[#CCFF00]" style={{ margin: '0 auto', boxShadow: '0 0 30px rgba(0,0,0,0.8)' }}>
           
-          {/* Header Bar */}
           <div className="border-b border-[#CCFF00] p-3 flex justify-between items-center bg-[#CCFF00] text-black">
             <div className="font-bold tracking-widest text-sm flex items-center gap-2">
               <span className="w-3 h-3 bg-black block animate-pulse"></span>
               TERMINAL: D2IZY-PORTFOLIO // ACTIVE+
             </div>
-            <div className="text-xs opacity-70">
-              [V. 2.0.6.7]
-            </div>
+            <div className="text-xs opacity-70">[V. 2.0.6.7]</div>
           </div>
 
-          {/* Navigation */}
           <div className="flex flex-col md:flex-row border-b dashed border-[#CCFF00]">
             {tabs.map((tab) => (
               <button
@@ -380,13 +368,9 @@ export default function App() {
             ))}
           </div>
 
-          {/* Content Area */}
           <div key={renderKey} className="p-6 md:p-12 min-h-[500px]">
-            
-            {/* MANIFEST (About) */}
             {activeTab === 'MANIFEST' && (
               <div className="max-w-4xl space-y-8">
-                
                 <div className="border-l-[6px] border-[#CCFF00] pl-6 py-1 space-y-3">
                   <div>
                     <span className="bg-[#CCFF00] text-[#030308] text-xl md:text-3xl font-bold tracking-widest px-2 py-1 inline-block">
@@ -399,20 +383,17 @@ export default function App() {
                     </span>
                   </div>
                 </div>
-                
                 <div className="space-y-6 text-sm md:text-base tracking-widest font-bold pt-4">
                   <p className="leading-[2.5]">
                     <span className="bg-[#CCFF00] text-[#030308] px-2 py-1" style={{ WebkitBoxDecorationBreak: 'clone', boxDecorationBreak: 'clone' }}>
                       <Typewriter text="I construct visual data. Videography, spatial 3D rendering, and photon-capture. The signal is often noisy. I refine it." delay={400} />
                     </span>
                   </p>
-                  
                   <p className="leading-[2.5]">
                     <span className="bg-[#CCFF00] text-[#030308] px-2 py-1" style={{ WebkitBoxDecorationBreak: 'clone', boxDecorationBreak: 'clone' }}>
                       <Typewriter text="My aesthetics are heavily influenced by the analog decay of physical media and the sterile, brutalist precision of orbital habitats. Perfection is a flaw. The glitch is the truth." delay={1000} />
                     </span>
                   </p>
-
                   <div className="border border-[#CCFF00] border-dashed p-6 mt-8 inline-block max-w-2xl">
                     <div className="mb-4">
                       <span className="bg-[#8CA800] text-[#030308] text-xs px-2 py-1 tracking-widest inline-block font-bold">
@@ -426,18 +407,15 @@ export default function App() {
                     </p>
                   </div>
                 </div>
-                
                 <div className="pt-12 flex items-center">
                   <span className="bg-[#8CA800] text-[#030308] text-xs px-2 py-1 tracking-widest font-bold inline-block">
                     <Typewriter text="END TRANSMISSION" delay={2500} />
                   </span>
                   <span className="cursor-blink ml-3"></span>
                 </div>
-                
               </div>
             )}
 
-            {/* VIDEO ARCHIVE */}
             {activeTab === 'VIDEO' && (
               <div className="space-y-6">
                 <div className="border-l-[6px] border-[#CCFF00] pl-6 py-1 mb-8 inline-block">
@@ -465,29 +443,22 @@ export default function App() {
                         ></iframe>
                       </div>
                       <div className="mt-2 text-[10px] flex justify-between font-bold">
-                        <span className="bg-[#8CA800] text-[#030308] px-1">
-                          <Typewriter text="STATUS: ONLINE" delay={400 + idx * 150} />
-                        </span>
-                        <span className="bg-[#8CA800] text-[#030308] px-1">
-                          <Typewriter text="EMBED_PROTOCOL_ACTIVE" delay={400 + idx * 150} />
-                        </span>
+                        <span className="bg-[#8CA800] text-[#030308] px-1"><Typewriter text="STATUS: ONLINE" delay={400 + idx * 150} /></span>
+                        <span className="bg-[#8CA800] text-[#030308] px-1"><Typewriter text="EMBED_PROTOCOL_ACTIVE" delay={400 + idx * 150} /></span>
                       </div>
                     </div>
                   ))}
                 </div>
-
-                <div className="mt-8 w-full border border-[#CCFF00] border-dashed group hover:bg-[#CCFF00] transition-colors cursor-pointer">
-                  <a href="https://youtube.com/playlist?list=PLBuYn3zljKswVPa5BPVwP0W20NK2QB4AR" target="_blank" rel="noreferrer" className="block w-full p-4 text-center">
+                <div className="mt-8 w-full border border-[#CCFF00] border-dashed group hover:bg-[#CCFF00] transition-colors cursor-pointer text-center p-4">
+                  <a href="https://youtube.com/playlist?list=PLBuYn3zljKswVPa5BPVwP0W20NK2QB4AR" target="_blank" rel="noreferrer" className="block w-full">
                     <span className="font-bold tracking-widest text-[#CCFF00] group-hover:text-[#030308] transition-colors">
                       <Typewriter text=">> ACCESS_EXTENDED_CLIENTLIST" delay={800} />
                     </span>
                   </a>
                 </div>
-
               </div>
             )}
 
-            {/* 3D ARCHIVE */}
             {activeTab === '3D' && (
               <div className="space-y-6">
                 <div className="border-l-[6px] border-[#CCFF00] pl-6 py-1 mb-8 inline-block">
@@ -513,12 +484,8 @@ export default function App() {
                          </div>
                       </div>
                       <div className="mt-2 text-[10px] flex justify-between font-bold">
-                        <span className="bg-[#8CA800] text-[#030308] px-1">
-                          <Typewriter text={`RENDER_${item.id}`} delay={300 + idx * 100} />
-                        </span>
-                        <span className="bg-[#8CA800] text-[#030308] px-1">
-                          <Typewriter text="[OK]" delay={300 + idx * 100} />
-                        </span>
+                        <span className="bg-[#8CA800] text-[#030308] px-1"><Typewriter text={`RENDER_${item.id}`} delay={300 + idx * 100} /></span>
+                        <span className="bg-[#8CA800] text-[#030308] px-1"><Typewriter text="[OK]" delay={300 + idx * 100} /></span>
                       </div>
                     </div>
                   ))}
@@ -526,7 +493,6 @@ export default function App() {
               </div>
             )}
 
-            {/* PHOTO ARCHIVE */}
             {activeTab === 'PHOTO' && (
               <div className="space-y-6">
                 <div className="border-l-[6px] border-[#CCFF00] pl-6 py-1 mb-8 inline-block">
@@ -536,68 +502,40 @@ export default function App() {
                 </div>
                 <div className="grid grid-cols-4 grid-rows-3 gap-4 h-[600px]">
                   <div className="col-span-2 row-span-2 border border-[#CCFF00] flex items-center justify-center relative glitch-hover cursor-pointer bg-[#CCFF00]/5">
-                    <span className="absolute top-2 left-2 text-[10px] bg-[#CCFF00] text-[#030308] px-1 font-bold">
-                      <Typewriter text="MAIN_SUBJECT.RAW" delay={100} />
-                    </span>
-                    <span className="text-4xl opacity-20">
-                      <Typewriter text="X" delay={200} speed={30} />
-                    </span>
+                    <span className="absolute top-2 left-2 text-[10px] bg-[#CCFF00] text-[#030308] px-1 font-bold"><Typewriter text="MAIN_SUBJECT.RAW" delay={100} /></span>
+                    <span className="text-4xl opacity-20"><Typewriter text="X" delay={200} speed={30} /></span>
                   </div>
                   <div className="col-span-2 row-span-1 border border-dashed border-[#CCFF00] flex items-center justify-center cursor-pointer hover:bg-[#CCFF00] hover:text-black transition-colors group">
-                     <span className="bg-[#CCFF00] text-[#030308] px-2 py-1 font-bold group-hover:bg-[#030308] group-hover:text-[#CCFF00]">
-                       <Typewriter text="FRAGMENT_A" delay={300} />
-                     </span>
+                     <span className="bg-[#CCFF00] text-[#030308] px-2 py-1 font-bold group-hover:bg-[#030308] group-hover:text-[#CCFF00]"><Typewriter text="FRAGMENT_A" delay={300} /></span>
                   </div>
                   <div className="col-span-1 row-span-2 border border-[#CCFF00] flex items-center justify-center bg-[#CCFF00]/10 cursor-pointer">
-                    <span className="rotate-90 text-xs tracking-widest bg-[#CCFF00] text-[#030308] px-1 font-bold">
-                      <Typewriter text="VERTICAL_SLICE" delay={400} />
-                    </span>
+                    <span className="rotate-90 text-xs tracking-widest bg-[#CCFF00] text-[#030308] px-1 font-bold"><Typewriter text="VERTICAL_SLICE" delay={400} /></span>
                   </div>
                   <div className="col-span-1 row-span-1 border border-[#CCFF00] border-dashed flex items-center justify-center cursor-pointer">
-                    <span className="opacity-80 bg-[#8CA800] text-[#030308] px-2 py-1 font-bold">
-                      <Typewriter text="B" delay={500} />
-                    </span>
+                    <span className="opacity-80 bg-[#8CA800] text-[#030308] px-2 py-1 font-bold"><Typewriter text="B" delay={500} /></span>
                   </div>
                   <div className="col-span-2 row-span-1 border border-[#CCFF00] flex items-center justify-center cursor-pointer relative group">
-                     <span className="text-[10px] bg-[#CCFF00] text-[#030308] px-2 py-1 font-bold group-hover:bg-red-600 transition-colors">
-                        <Typewriter text="DATA_CORRUPTED // FRAGMENT_C" delay={600} />
-                     </span>
+                     <span className="text-[10px] bg-[#CCFF00] text-[#030308] px-2 py-1 font-bold group-hover:bg-red-600 transition-colors"><Typewriter text="DATA_CORRUPTED // FRAGMENT_C" delay={600} /></span>
                   </div>
-                  
-                  <a 
-                    href="https://instagram.com/d2izy_" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="col-span-1 row-span-1 border border-dashed border-[#CCFF00] flex items-center justify-center cursor-pointer hover:bg-[#CCFF00] transition-colors group"
-                    onClick={triggerClickGlitchSequence}
-                  >
-                     <span className="bg-[#CCFF00] text-[#030308] px-2 py-1 font-bold group-hover:bg-[#030308] group-hover:text-[#CCFF00] transition-colors text-xs text-center border border-[#CCFF00]">
-                       <Typewriter text="VIEW_ALL" delay={700} />
-                     </span>
+                  <a href="https://instagram.com/d2izy_" target="_blank" rel="noreferrer" className="col-span-1 row-span-1 border border-dashed border-[#CCFF00] flex items-center justify-center cursor-pointer hover:bg-[#CCFF00] transition-colors group" onClick={triggerClickGlitchSequence}>
+                     <span className="bg-[#CCFF00] text-[#030308] px-2 py-1 font-bold group-hover:bg-[#030308] group-hover:text-[#CCFF00] transition-colors text-xs text-center border border-[#CCFF00]"><Typewriter text="VIEW_ALL" delay={700} /></span>
                   </a>
-
                 </div>
               </div>
             )}
-
           </div>
 
-          {/* Footer Bar */}
           <div className="border-t border-[#CCFF00] p-3 flex justify-between items-center bg-[#CCFF00] text-[#030308] text-xs font-bold">
             <div className="flex gap-4">
               <span onClick={() => { setIsContactModalOpen(true); triggerClickGlitchSequence(); }} className="hover:bg-[#030308] hover:text-[#CCFF00] px-1 cursor-pointer transition-colors">[CONTACT]</span>
               <span onClick={() => { setIsContactModalOpen(true); triggerClickGlitchSequence(); }} className="hover:bg-[#030308] hover:text-[#CCFF00] px-1 cursor-pointer transition-colors">[YOUTUBE]</span>
               <span onClick={() => { setIsContactModalOpen(true); triggerClickGlitchSequence(); }} className="hover:bg-[#030308] hover:text-[#CCFF00] px-1 cursor-pointer transition-colors">[TWITTER]</span>
             </div>
-            <div className="opacity-80 hidden md:block">
-              SECURE CONNECTION // 4:2:2 ENCRYPTION // 4LT APPROVED
-            </div>
+            <div className="opacity-80 hidden md:block">SECURE CONNECTION // 4:2:2 ENCRYPTION // 4LT APPROVED</div>
           </div>
-
         </div>
       </div>
 
-      {/* Contact Modal / Socials Directory */}
       {isContactModalOpen && (
         <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="w-full max-w-lg border border-[#CCFF00] bg-[#030308] shadow-2xl">
@@ -607,30 +545,24 @@ export default function App() {
             </div>
             <div className="p-6 space-y-4 font-bold tracking-widest text-sm text-[#CCFF00]">
               <a href="https://youtube.com/@d2izy" target="_blank" rel="noreferrer" className="flex justify-between items-center border border-dashed border-[#CCFF00] p-3 hover:bg-[#CCFF00] hover:text-[#030308] transition-colors">
-                <span>&gt; YOUTUBE</span>
-                <span className="opacity-80">@d2izy</span>
+                <span>&gt; YOUTUBE</span><span className="opacity-80">@d2izy</span>
               </a>
               <a href="https://twitter.com/d2izy" target="_blank" rel="noreferrer" className="flex justify-between items-center border border-dashed border-[#CCFF00] p-3 hover:bg-[#CCFF00] hover:text-[#030308] transition-colors">
-                <span>&gt; TWITTER</span>
-                <span className="opacity-80">@d2izy</span>
+                <span>&gt; TWITTER</span><span className="opacity-80">@d2izy</span>
               </a>
               <a href="https://instagram.com/d2izy_" target="_blank" rel="noreferrer" className="flex justify-between items-center border border-dashed border-[#CCFF00] p-3 hover:bg-[#CCFF00] hover:text-[#030308] transition-colors">
-                <span>&gt; INSTAGRAM</span>
-                <span className="opacity-80">@d2izy_</span>
+                <span>&gt; INSTAGRAM</span><span className="opacity-80">@d2izy_</span>
               </a>
               <a href="https://discord.gg/VQWQaZJwrh" target="_blank" rel="noreferrer" className="flex justify-between items-center border border-dashed border-[#CCFF00] p-3 hover:bg-[#CCFF00] hover:text-[#030308] transition-colors">
-                <span>&gt; DISCORD_SERVER</span>
-                <span className="opacity-80 text-[10px]">discord.gg/VQWQaZJwrh</span>
+                <span>&gt; DISCORD_SERVER</span><span className="opacity-80 text-[10px]">discord.gg/VQWQaZJwrh</span>
               </a>
               <a href="mailto:d2izycontact@gmail.com" className="flex justify-between items-center border border-dashed border-[#CCFF00] p-3 hover:bg-[#CCFF00] hover:text-[#030308] transition-colors">
-                <span>&gt; COMMS_LINK (EMAIL)</span>
-                <span className="opacity-80 text-[10px]">d2izycontact@gmail.com</span>
+                <span>&gt; COMMS_LINK (EMAIL)</span><span className="opacity-80 text-[10px]">d2izycontact@gmail.com</span>
               </a>
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 }
